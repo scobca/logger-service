@@ -10,9 +10,9 @@ plugins {
     id("it.nicolasfarabegoli.conventional-commits") version "3.1.3"
 }
 
-group = "org.careerseekers"
+group = "org.scobca"
 version = "0.0.1-SNAPSHOT"
-description = "cs-logger-service"
+description = "logger-service"
 
 java {
     toolchain {
