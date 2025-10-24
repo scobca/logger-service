@@ -5,9 +5,6 @@ import org.apache.kafka.common.serialization.Deserializer
 import org.apache.kafka.common.serialization.Serializer
 import org.scobca.loggerservice.dto.KafkaMessagesDto
 import org.springframework.stereotype.Component
-import kotlin.collections.isEmpty
-import kotlin.collections.toString
-import kotlin.text.toByteArray
 
 @Suppress("UNCHECKED_CAST")
 @Component
