@@ -14,11 +14,13 @@ spring:
             max:
               ms: 20000
 
-  database:
-    url: ${LS_DB_URL}
-    username: ${LS_DB_USER}
-    password: ${LS_DB_PASSWORD}
-    schema: ${LS_DB_SCHEMA}
+database:
+  host: ${LS_DB_HOST}
+  port: ${LS_DB_PORT}
+  name: ${LS_DB_NAME}
+  username: ${LS_DB_USER}
+  password: ${LS_DB_PASSWORD}
+  schema: ${LS_DB_SCHEMA}
 
 server:
   port: ${SERVER_INTERNAL_PORT}
