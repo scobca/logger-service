@@ -12,10 +12,31 @@ import org.springframework.kafka.core.ConsumerFactory
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory
 import org.springframework.kafka.listener.ContainerProperties
 
+/**
+ * Kafka consumer configuration for the logging service.
+ *
+ * This configuration class sets up a Kafka consumer factory and a concurrent
+ * Kafka listener container factory for consuming messages of type [KafkaMessagesDto].
+ *
+ * Consumer properties include connection to Kafka cluster, deserialization,
+ * consumer group configuration, manual commit mode, and fetch settings.
+ *
+ * The container factory is configured for manual immediate acknowledgment mode.
+ *
+ * @property properties Kafka connection and cluster properties encapsulated in [KafkaProperties].
+ */
 @EnableKafka
 @Configuration
 class KafkaConsumerFactoryConfig(private val properties: KafkaProperties) {
 
+    /**
+     * Creates the [ConsumerFactory] bean for Kafka consumers.
+     *
+     * Configures Kafka consumer settings such as bootstrap servers, consumer group,
+     * deserializers, commit behavior, and fetching options.
+     *
+     * @return a configured [ConsumerFactory] for consuming [KafkaMessagesDto].
+     */
     @Bean
     fun consumerFactory(): ConsumerFactory<String, KafkaMessagesDto> {
         val configProps = mapOf(
@@ -67,6 +88,15 @@ class KafkaConsumerFactoryConfig(private val properties: KafkaProperties) {
         return DefaultKafkaConsumerFactory(configProps)
     }
 
+    /**
+     * Creates the [ConcurrentKafkaListenerContainerFactory] bean.
+     *
+     * This factory uses the configured consumer factory and sets the acknowledgment mode
+     * to manual immediate, allowing for manual control over commit offsets.
+     *
+     * @param consumerFactory the Kafka consumer factory bean.
+     * @return a configured concurrent Kafka listener container factory.
+     */
     @Bean
     fun kafkaListenerContainerFactory(
         consumerFactory: ConsumerFactory<String, KafkaMessagesDto>

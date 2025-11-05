@@ -8,9 +8,25 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import javax.sql.DataSource
 
+/**
+ * Configuration class for Flyway database migrations.
+ *
+ * This class configures a [DataSource] using HikariCP connection pool based
+ * on the provided [DatabaseProperties]. It also sets up Flyway to perform
+ * database schema migrations on application startup.
+ *
+ * The Flyway bean triggers migration at startup and logs applied migrations.
+ *
+ * @property databaseProperties Configuration properties for database connection.
+ */
 @Configuration
 class FlywayConfig(private val databaseProperties: DatabaseProperties) {
 
+    /**
+     * Configures and returns a HikariCP [DataSource] based on database properties.
+     *
+     * @return configured [DataSource] for database connections.
+     */
     @Bean
     fun dataSource(): DataSource {
         val config = HikariConfig().apply {
@@ -23,6 +39,13 @@ class FlywayConfig(private val databaseProperties: DatabaseProperties) {
         return HikariDataSource(config)
     }
 
+    /**
+     * Configures Flyway with the provided [DataSource], runs migrations,
+     * and logs migration details.
+     *
+     * @param dataSource the database connection source for Flyway.
+     * @return configured and executed Flyway instance.
+     */
     @Bean
     fun flyway(dataSource: DataSource): Flyway {
         val logger = LoggerFactory.getLogger(FlywayConfig::class.java)

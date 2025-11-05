@@ -13,9 +13,25 @@ import io.r2dbc.spi.Option
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
+/**
+ * Configuration class for setting up reactive R2DBC ConnectionFactory
+ * to connect to a Postgres database.
+ *
+ * This configuration builds the connection options dynamically using
+ * application properties and creates a reactive [ConnectionFactory]
+ * bean for database operations.
+ *
+ * @property databaseProperties The properties object containing database connection details.
+ */
 @Configuration
 class DatabaseConfig(private val databaseProperties: DatabaseProperties) {
 
+    /**
+     * Creates a reactive [ConnectionFactory] bean configured for Postgres
+     * using the application's database properties.
+     *
+     * @return a configured [ConnectionFactory] instance.
+     */
     @Bean
     fun connectionFactory(): ConnectionFactory {
         val options = ConnectionFactoryOptions.builder()

@@ -10,9 +10,26 @@ import org.springframework.kafka.core.DefaultKafkaProducerFactory
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.kafka.core.ProducerFactory
 
+/**
+ * Kafka producer configuration for the logging service.
+ *
+ * This configuration class defines the Kafka [ProducerFactory] and [KafkaTemplate]
+ * for sending messages of type [KafkaMessagesDto] to Kafka topics.
+ *
+ * It configures Kafka producer properties such as bootstrap servers,
+ * serializers, retries, reliability guarantees, batching, and timeouts.
+ *
+ * @param T the type of messages to produce, extending [KafkaMessagesDto].
+ * @property properties encapsulated Kafka cluster properties.
+ */
 @Configuration
 class KafkaProducerFactoryConfig<T : KafkaMessagesDto>(private val properties: KafkaProperties) {
 
+    /**
+     * Creates the Kafka [ProducerFactory] bean configured with producer properties.
+     *
+     * @return a configured [ProducerFactory] for producing messages of type T.
+     */
     @Bean
     fun producerFactory(): ProducerFactory<String, T> {
         val configProps = mapOf(
@@ -58,6 +75,11 @@ class KafkaProducerFactoryConfig<T : KafkaMessagesDto>(private val properties: K
         return DefaultKafkaProducerFactory(configProps)
     }
 
+    /**
+     * Creates the [KafkaTemplate] bean for sending Kafka messages.
+     *
+     * @return a [KafkaTemplate] for producing messages of type T.
+     */
     @Bean
     fun emailSendingKafkaProducer(): KafkaTemplate<String, T> {
         return KafkaTemplate(producerFactory())
