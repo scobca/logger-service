@@ -8,6 +8,20 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 
+/**
+ * Global HTTP exception handler for REST controllers.
+ *
+ * Provides centralized handling of exceptions thrown by any controller within the application,
+ * converting them into consistent [BasicErrorResponse] objects with appropriate HTTP status codes.
+ * Handles both general exceptions (500 Internal Server Error) and custom project exceptions
+ * such as [NotFoundException] and [BadRequestException].
+ *
+ * @see org.springframework.web.bind.annotation.RestControllerAdvice
+ * @see org.springframework.web.bind.annotation.ExceptionHandler
+ * @see NotFoundException
+ * @see BadRequestException
+ * @see BasicErrorResponse
+ */
 @RestControllerAdvice
 class GlobalHttpExceptionHandler {
 
