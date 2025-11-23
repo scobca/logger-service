@@ -7,6 +7,19 @@ import org.scobca.loggerservice.services.interfaces.KafkaTopicHandler
 import org.springframework.stereotype.Service
 import java.time.Instant
 
+/**
+ * Topic handler for logger events, responsible for saving them to the database.
+ *
+ * Transforms [LoggerMessage] data to [org.scobca.loggerservice.entities.EventsHistory] entities using [EventsHistoryMapper] and
+ * persists them asynchronously using [EventsHistoryRepository]. Implements [KafkaTopicHandler] for [LoggerMessage].
+ *
+ * @property repository the Spring Data repository for persisting event histories
+ * @property eventsHistoryMapper the mapper used for converting [LoggerMessage] to [org.scobca.loggerservice.entities.EventsHistory]
+ * @see KafkaTopicHandler
+ * @see EventsHistoryRepository
+ * @see EventsHistoryMapper
+ * @see LoggerMessage
+ */
 @Service
 class LoggerEventsTopicHandler(
     private val repository: EventsHistoryRepository,
