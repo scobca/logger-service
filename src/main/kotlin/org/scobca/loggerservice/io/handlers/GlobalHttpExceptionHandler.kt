@@ -1,7 +1,6 @@
 package org.scobca.loggerservice.io.handlers
 
 import org.scobca.loggerservice.exceptions.BadRequestException
-import org.scobca.loggerservice.exceptions.DoubleRecordException
 import org.scobca.loggerservice.exceptions.NotFoundException
 import org.scobca.loggerservice.io.BasicErrorResponse
 import org.springframework.http.HttpStatus
@@ -38,16 +37,6 @@ class GlobalHttpExceptionHandler {
         )
 
         return ResponseEntity(errorResponse, HttpStatus.NOT_FOUND)
-    }
-
-    @ExceptionHandler(DoubleRecordException::class)
-    fun handleDoubleRecordException(ex: DoubleRecordException): ResponseEntity<BasicErrorResponse> {
-        val errorResponse = BasicErrorResponse(
-            status = HttpStatus.CONFLICT.value(),
-            message = ex.message
-        )
-
-        return ResponseEntity(errorResponse, HttpStatus.CONFLICT)
     }
 
     @ExceptionHandler(BadRequestException::class)
