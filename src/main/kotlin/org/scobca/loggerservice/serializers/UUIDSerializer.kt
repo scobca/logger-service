@@ -8,6 +8,15 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import java.util.*
 
+/**
+ * kotlinx.serialization serializer for [UUID] values.
+ *
+ * Serializes UUIDs as standard string representations and deserializes them back to [UUID] objects.
+ * Throws [IllegalArgumentException] if the string is not a valid UUID format.
+ *
+ * @see java.util.UUID
+ * @see kotlinx.serialization.KSerializer
+ */
 object UUIDSerializer : KSerializer<UUID> {
     override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("UUID", PrimitiveKind.STRING)
 

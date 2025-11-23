@@ -6,6 +6,24 @@ import org.apache.kafka.common.serialization.Serializer
 import org.scobca.loggerservice.dto.KafkaMessagesDto
 import org.springframework.stereotype.Component
 
+/**
+ * Kafka serializer and deserializer for polymorphic message types using kotlinx.serialization.
+ *
+ * Generic over [Base], which must inherit from [KafkaMessagesDto]. Serializes and deserializes messages
+ * polymorphically using a custom [kotlinx.serialization.json.Json] configuration, enabling support for concrete subtypes.
+ *
+ * - Uses [CustomSerializerModule.json] for polymorphic serialization and deserialization.
+ * - Employs the base class serializer, cast for generic usage to support all inheritors of [KafkaMessagesDto].
+ *
+ * Implements both [Serializer] and [Deserializer] interfaces for use with Kafka producers/consumers.
+ * Ignores configuration and close methods for stateless operation.
+ *
+ * @param Base the base type for supported messages (extends [KafkaMessagesDto])
+ * @see org.apache.kafka.common.serialization.Serializer
+ * @see org.apache.kafka.common.serialization.Deserializer
+ * @see KafkaMessagesDto
+ * @see kotlinx.serialization.KSerializer
+ */
 @Suppress("UNCHECKED_CAST")
 @Component
 class PolymorphicKafkaSerializer<Base : KafkaMessagesDto> : Serializer<Base>, Deserializer<Base> {
