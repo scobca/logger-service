@@ -8,5 +8,5 @@ package org.scobca.loggerservice.services.interfaces
  * @param T the type of message to handle
  */
 interface KafkaTopicHandler<T> {
-    fun handle(message: T)
+    fun handle(message: T): Any
 }

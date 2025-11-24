@@ -4,7 +4,9 @@ import org.scobca.loggerservice.dto.LoggerMessage
 import org.scobca.loggerservice.mappers.EventsHistoryMapper
 import org.scobca.loggerservice.repositories.EventsHistoryRepository
 import org.scobca.loggerservice.services.interfaces.KafkaTopicHandler
+import org.slf4j.LoggerFactory.getLogger
 import org.springframework.stereotype.Service
+import reactor.core.Disposable
 import java.time.Instant
 
 /**
@@ -26,10 +28,12 @@ class LoggerEventsTopicHandler(
     private val eventsHistoryMapper: EventsHistoryMapper,
 ) : KafkaTopicHandler<LoggerMessage> {
 
-    override fun handle(
-        message: LoggerMessage,
-    ) {
-        eventsHistoryMapper.recordFromDto(message, Instant.now())
-            .also(repository::save)
+    private val logger = getLogger(javaClass)
+
+    override fun handle(message: LoggerMessage): Disposable {
+        val record = eventsHistoryMapper.recordFromDto(message, Instant.now())
+        return repository.save(record)
+            .doOnSuccess { logger.info("Event caught") }
+            .subscribe()
     }
 }

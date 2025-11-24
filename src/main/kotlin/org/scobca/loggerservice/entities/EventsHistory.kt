@@ -1,6 +1,5 @@
 package org.scobca.loggerservice.entities
 
-import org.scobca.loggerservice.dto.EventDescriptionDto
 import org.scobca.loggerservice.enums.EventsType
 import org.scobca.loggerservice.enums.ServiceType
 import org.springframework.data.annotation.Id
@@ -32,7 +31,7 @@ data class EventsHistory (
 
     val eventType: EventsType,
 
-    val eventDescription: EventDescriptionDto? = null,
+    val eventDescription: String? = null,
 
     val userId: Long? = null,
 
